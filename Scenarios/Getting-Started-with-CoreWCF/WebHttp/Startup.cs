@@ -1,6 +1,7 @@
 ﻿using CoreWCF;
 using CoreWCF.Configuration;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Xml;
@@ -24,6 +25,10 @@ internal sealed class Startup
         });
 
         services.AddSingleton(new SwaggerOptions());
+        services.Configure<KestrelServerOptions>(options =>
+        {
+            options.AllowSynchronousIO = true;
+        });
     }
 
     public void Configure(IApplicationBuilder app)
